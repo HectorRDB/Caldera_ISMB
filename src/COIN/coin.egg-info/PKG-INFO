@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: coin
+Version: 0.0.1
+Summary: COIN
+Home-page: UNKNOWN
+Author: Hector Roux de Bezieux
+Author-email: hector.rouxdebezieux@berkeley.edu
+License: UNKNOWN
+Description: # COIN
+        
+        Our implementation of the COIN algorithm from Sese et. al
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown

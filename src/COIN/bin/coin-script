@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+
+import os, argparse
+import sys, os, argparse
+import numpy as np
+from coin._core import COIN
+
+parser = argparse.ArgumentParser(description =  "Run the COIN algorithm.")
+parser.add_argument("-l", "--loc", help = "where to find the step 1 folder.",
+                    type = str, required = True)
+parser.add_argument("-o", "--output",
+                    help = "Where to store the output. Default to loc/step2/",
+                    type = str, default = "")
+parser.add_argument("-C", "--communities",
+                    help = "Number of communities to find. Default to 3",
+                    type = int, default = 3)
+parser.add_argument("-P", "--comFile",
+                    help = "Location of the community assignement file." +
+                            " If none is specified, default to k-means " +
+                            "with k = communities",
+                    type = str, default = "None")
+parser.add_argument("--Lmax",
+                    help = "Maximum size of each subgraph in bp." +
+                            " Default to 100",
+                    type = int, default = 100)
+parser.add_argument("--kmax",
+                    help = "Maximum value on k to avoid exploring the full" +
+                            " graph. Default to 10^8",
+                    type = int, default = 10 ** 8)
+parser.add_argument("-s", "--Smax",
+                    help = "Maximum value on number of stages to avoid " +
+                            "exploring the full graph. 300",
+                    type = int, default = 300)
+parser.add_argument("--alpha",
+                    help = "FWER Control value. Defaul to 10^(-8)",
+                    type = np.float64, default = 10 ** (-8))
+parser.add_argument("-v", "--verbose",
+                    help = "Wether to be verbose or not. Default to FALSE",
+                    type = np.bool_, default = False)
+parser.parse_args()
+
+# Creating directories if needed
+args = parser.parse_args()
+if args.output == "":
+    output = args.loc + '/step2/'
+else:
+    output = args.output
+if not os.path.exists(output):
+    os.makedirs(output)
+if args.verbose:
+    print("Running COIN on the files in {loc}.".format(loc = args.loc))
+    print("Looking for subgraphs significant across " +
+    "{C} communities.".format(C = args.communities))
+    print("Stopping if the subgraph has more than {Lmax} bps".format(
+            Lmax = args.Lmax))
+    print()
+if args.comFile != "None":
+    comFile = args.comFile
+else:
+    comFile = "None"
+if args.verbose and comFile != "None":
+    print("Reading community file from {file}".format(file = comFile))
+    print()
+
+# Running the COIN algo per say
+COIN(loc = args.loc, output = output, communities = args.communities, Lmax = args.Lmax, kmax = args.kmax,
+        comFile = comFile, verbose = args.verbose, alpha = args.alpha)
+        

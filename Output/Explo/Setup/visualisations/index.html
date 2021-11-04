@@ -1,0 +1,199 @@
+<!--
+## Copyright (C) <2017>  <bioMerieux, Universite Claude Bernard Lyon 1,
+## Centre National de la Recherche Scientifique>
+
+## 1. This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as published
+## by the Free Software Foundation version 3 of the  License and under the
+## terms of article 2 below.
+## 2. This program is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+## or FITNESS FOR A PARTICULAR PURPOSE. See below the GNU Affero General
+## Public License for more details.
+## You should have received a copy of the GNU Affero General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+## 3. Communication to the public by any means, in particular in the form of
+## a scientific paper, a poster, a slideshow, an internet page, or a patent,
+## of a result obtained directly or indirectly by running this program must
+## cite the following paper :
+##  Magali Jaillard, Maud Tournoud, Leandro Lima, Vincent Lacroix,
+##  Jean-Baptiste Veyrieras and Laurent Jacob, "Representing Genetic
+##  Determinants in Bacterial GWAS with Compacted De Bruijn Graphs", 2017,
+##  Cold Spring Harbor Labs Journals, doi:10.1101/113563.
+##  (url: http://www.biorxiv.org/content/early/2017/03/03/113563)
+## -------------------------------------------------------------------------
+
+## Authors (alphabetically): Jacob L., Jaillard M., Lima L.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <link rel="stylesheet" href="components/lib/css/query-builder.default.min.css">
+    <link rel="stylesheet" href="components/lib/css/style.css">
+    <link rel="stylesheet" href="components/lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="components/lib/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="components/lib/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="components/lib/css/font-awesome.min.css">
+    <link href="components/lib/css/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+    <link href="components/lib/css/handsontable.full.min.css" rel="stylesheet" type="text/css" />
+    <link href="components/lib/css/jquery-ui.min.css" rel="stylesheet">
+    <link href="components/lib/css/indexStyle.css" rel="stylesheet">
+
+    <script src="components/lib/js/jquery.min.js"></script>
+    <script src="components/lib/js/bootstrap.min.js"></script>
+    <script src="components/lib/js/jquery-ui.min.js"></script>
+    <script src="components/lib/js/query-builder.standalone.min.js"></script>
+    <script src="components/lib/js/alasql.min.js"></script>
+    <script src="components/lib/js/handsontable.full.min.js"></script>
+    <script src="components/lib/js/jquery.blockUI.js"></script>
+    <script src="components/lib/js/shuffle.min.js"></script>
+    <script src="components/lib/js/functions.js"></script>
+    <script src="components/lib/js/indexJS.js"></script>
+
+    <title>Your DBGWAS [version 0.5.4 git commit fatal: not a git repository (or any of the parent directories): .git] results</title>
+</head>
+<body>
+
+<!-- Loading message -->
+<script>
+    blockForTheFirstTime();
+</script>
+
+<div id="logoContainer">
+    <a target="_blank" href="https://team.inria.fr/erable/en/"><img class="logo" src="components/lib/resources/erable_logo.png" /></a>
+    <a target="_blank" href="https://lbbe.univ-lyon1.fr/?lang=en"><img class="logo" src="components/lib/resources/lbbe_logo.png" /></a>
+    <a target="_blank" href="http://www.biomerieux.fr/"><img class="logo" src="components/lib/resources/biomerieux_logo.png" /></a>
+</div>
+
+<h1>Your DBGWAS [version 0.5.4 git commit fatal: not a git repository (or any of the parent directories): .git] results</h1>
+
+<button id="argumentsButton" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#arguments">
+    <span class="glyphicon glyphicon-collapse-down"></span> Show arguments used to produce these results
+</button>
+<div id="arguments" class="collapse">
+<textarea class="code" rows="10" style="margin:0 auto; width:90%;" readonly>
+-strains = /Raw/Explo//strains
+-skip1
+-skip2
+-caldera
+-nb-cores = 2
+-output = /Output/Explo//Setup
+-SFF = p2
+-k = 31
+-nh = 5
+-maf = 0.01
+-phenoThreshold = 0.0
+-GEMMA-path = <DBGWAS_lib>/gemma.0.93b
+-Blast-path = <DBGWAS_lib>/
+-phantomjs-path = <DBGWAS_lib>/phantomjs
+-Rscript-path = Rscript
+-verbose = 1
+
+</textarea>
+</div>
+
+<p style="margin-top: 1cm; clear: both;"/>
+
+<button id="statsButton" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#stats">
+    <span class="glyphicon glyphicon-collapse-down"></span> Show figures on lineage effect
+</button>
+<div id="stats" style="margin:0 auto; width:90%;" class="collapse">
+    Re-run DBGWAS with a newick tree file (-newick parameter) to view figures on lineage effect.
+</div>
+
+<p style="margin-top: 1cm; clear: both;"/>
+
+<button id="filtersButton" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filters">
+    <span class="glyphicon glyphicon-collapse-up"></span> Hide filters
+</button>
+<div id="filters" style="margin:0 auto; width:90%;" class="collapse in">
+    <h3> Filters: </h3>
+    <div id="builder"></div>
+
+    <script>
+        $( document ).ready(function() {
+            //auto generated stuff comes here
+            var data = [{id: 0,
+pvalue: 1e+09,
+qvalue: 1e+09,
+ccs_pvalue: 1e-07,
+nb_of_ccs: 2,
+annCat: '#@#-322No annotations found#@#-322 ',
+preview: '<table class="componentTable" id="table_comp_0"><tr>    <td>        <center><strong>Comp_0</strong></center>    </td></tr><tr><td>p-value: 1.000000e-07</td></tr><tr><td>Number of CCS: 2</td></tr><tr>    <td>        704 unitigs (704 significants)    </td></tr><tr>    <td>        <div id="annot_comp_0" class="hotIndexTable"></div>    </td></tr><tr>    <td>        Preview (click to open) <br/>        <center>            <img class="preview" id="img_0" onclick="window.open(\'components/comp_0.html\', \'_blank\')" src="components/comp_0.html.png"/>        </center>    </td></tr></table>',
+annHOT: []}
+, ]
+            var caldera = true
+            //auto generated stuff comes here
+
+            var queryBuilder;
+
+            if (caldera) {
+                queryBuilder = $('#builder').queryBuilder({
+                    filters: [
+                        {id: 'ccs_pvalue', type: 'string', label: 'p-value', input: 'text', operators: ['equal', 'not_equal', 'less', 'less_or_equal', 'greater', 'greater_or_equal', 'between']},
+                        {id: 'nb_of_ccs', type: 'string', label: 'Number of CCS', input: 'text', operators: ['equal', 'not_equal', 'less', 'less_or_equal', 'greater', 'greater_or_equal', 'between']},
+                        {id: 'annCat', type: 'string', label: 'Annotations', input: 'select', operators: ['contains', 'not_contains'], values: {'#@#-322No annotations found#@#-322' : 'No annotations found', }}
+                    ],
+                    rules: [{
+                        condition: 'AND',
+                        id: 'nb_of_ccs',
+                        operator: 'greater_or_equal',
+                        value: ['1.0']
+                    }],
+                    allow_empty: true
+                    });
+            }
+            else {
+                queryBuilder = $('#builder').queryBuilder({
+                    filters: [
+                        {id: 'pvalue', type: 'string', label: 'p-value', input: 'text', operators: ['equal', 'not_equal', 'less', 'less_or_equal', 'greater', 'greater_or_equal', 'between']},
+                        {id: 'qvalue', type: 'string', label: 'q-value', input: 'text', operators: ['equal', 'not_equal', 'less', 'less_or_equal', 'greater', 'greater_or_equal', 'between']},
+                        {id: 'annCat', type: 'string', label: 'Annotations', input: 'select', operators: ['contains', 'not_contains'], values: {'#@#-322No annotations found#@#-322' : 'No annotations found', }}
+                    ],
+                    rules: [{
+                        condition: 'AND',
+                        id: 'pvalue',
+                        operator: 'between',
+                        value: ['0.0', '1.0']
+                    }],
+                    allow_empty: true
+                });
+            }
+
+            //load the data in the data variable into the AlaSQL DB
+            createComponentsDB(data);
+
+            //create all spreadsheets representing the annotations
+            buildAllComponents();
+
+            //show the components according to the search
+            //TODO: bug on Shuffle.js
+            //showComponents(); //calling the function just like this does not work well because Shuffle.js bugs... If we "click" the button, then it works well... God knows why...
+            $("#applyFilterButton").trigger("click");
+            })
+    </script>
+
+    <h3> Sort by:
+        <select id="sortTerm">
+            <option value="ccs_pvalue" selected>CCS p-value</option>
+<option value="nb_of_ccs">Number of CCS</option>
+        </select>
+        <select id="asc_desc">
+            <option value="ASC" selected>Asc</option>
+            <option value="DESC">Desc</option>
+        </select>
+    </h3>
+
+    <br/>
+    <button id="applyFilterButton" type="button" class="centeredbtn" onclick="showComponents();">Apply</button>
+    <br/>
+</div>
+<br/>
+<br/>
+
+<div id="showItemsDiv"></div>
+
+</body>
+</html>

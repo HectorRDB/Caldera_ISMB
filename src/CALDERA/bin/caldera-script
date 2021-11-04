@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+
+import os, argparse
+import numpy as np
+import pickle
+from caldera._core import CALDERA
+
+# Parsing all arguments
+parser = argparse.ArgumentParser(description =  "Run the CALDERA script.",
+                                 epilog = "This program will save the list of " +
+                                          "significant connected subgraphs as " +
+                                          "well as the associated p-values in " +
+                                          "the specified folder. Note that if " +
+                                          "runtime is too slow, either increase " +
+                                          "the value of alpha, decrease sMax or " +
+                                          "increase the number of cores. " +
+                                          "Caldera is quite memory intensive so " +
+                                          "make sure to keep track of memory " +
+                                          "usage if running on a large file.\n")
+parser.add_argument("-l", "--loc", help = "where to find the step 1 folder from DGWAS.",
+                    type = str, required = True)
+parser.add_argument("-o", "--output",
+                    help = "Where to store the output. Default to loc/step2/",
+                    type = str, default = "")
+parser.add_argument("-t", "--threads",
+                    help = "How many threads to use. Default to 1",
+                    type = int, default = 1)
+parser.add_argument("-C", "--communities",
+                    help = "Number of communities to find. Default to 3",
+                    type = int, default = 3)
+parser.add_argument("-P", "--comFile",
+                    help = "Location of the community assignement file." +
+                            " If none is specified, default to k-means " +
+                            "with k = communities",
+                    type = str, default = "None")
+parser.add_argument("--Lmax",
+                    help = "Maximum size of each subgraph in bp." +
+                            " Default to 100",
+                    type = int, default = 100)
+parser.add_argument("-s", "--Smax",
+                    help = "Maximum value on number of stages to avoid " +
+                            "exploring the full graph. Default to 300",
+                    type = int, default = 300)
+parser.add_argument("-b", "--batch_size",
+                    help = "Maximum breath size. If it is reached, leads to " +
+                            "hybrid exploration. Default to 10 ** 10",
+                    type = int, default = 10 ** 10)
+parser.add_argument("--alpha",
+                    help = "FWER Control value. Defaul to 10 ** (-8). A value of " +
+                            "zero will means that alpha is picked automatically.",
+                    type = np.float64, default = 10 ** (-8))
+parser.add_argument("-v", "--verbose", dest = 'verbose', action = 'store_true',
+                    help = "Wether to be verbose. If not specified (default), " +
+                           "it will not be verbose.")
+parser.set_defaults(verbose = False)
+parser.add_argument("--kmax",
+                    help = "Maximum value on k to avoid exploring the full" +
+                            " graph. Default to 10 ** 8",
+                    type = int, default = 10 ** 8)
+parser.add_argument('--dfs', dest = 'bfs', action = 'store_false',
+                    help = "If this option is set, the code will be run in DFS")
+parser.set_defaults(bfs = True)
+parser.add_argument('--save_int', dest = 'save_int', action = 'store_true',
+                    help = "If this option is set, the current list of subgraphs" +
+                           " will be saved for future reruns.")
+parser.set_defaults(save_int = False)
+parser.add_argument('--restart', dest = 'restart', action = 'store_true',
+                    help = "If this option is set, the code assumes that there is a restart.")                    
+parser.set_defaults(restart = False)
+parser.parse_args()
+# Creating directories if needed
+args = parser.parse_args()
+if args.output == "":
+    output = args.loc + '/step2/'
+else:
+    output = args.output
+if not os.path.exists(output):
+    os.makedirs(output)
+if args.verbose:
+    print("Running CALDERA on {threads} cores on the files in {loc}.".format(
+    threads = args.threads, loc = args.loc), flush = True)
+    print("Looking for subgraphs significant across " +
+    "{C} communities.".format(C = args.communities))
+    print("Stopping if the subgraph has more than {Lmax} bps or after {s} stage".format(
+            Lmax = args.Lmax, s = args.Smax), flush = True)
+    print(flush = True)
+if args.comFile != "None":
+    comFile = args.comFile
+else:
+    comFile = "None"
+if args.verbose and comFile != "None":
+    print("Reading community file from {file}".format(file = comFile), flush = True)
+    print(flush = True)
+
+if args.restart:
+    old_args = pickle.load(open(args.loc + 'save_int_param.obj', 'rb'))
+    assert(old_args[0] <= args.Smax), 'The restart should be based on a run with less stages'
+    assert(old_args[1] == args.Lmax), 'The restart should be based on a run with the same Lmax'
+    assert(old_args[2] == args.alpha), 'The restart should be based on a run with the same alpha'
+
+alpha = args.alpha
+if alpha <= 0:
+    alpha = None
+# Running the CALDERA algo per say
+
+CALDERA(loc = args.loc, output = output, threads = args.threads,
+        communities = args.communities, comFile = comFile, 
+        Lmax = args.Lmax, kmax = args.kmax, sMax = args.Smax, 
+        batch_size= args.batch_size, alpha = alpha,
+        verbose = args.verbose, BFS = args.bfs,
+        save_int = args.save_int, restart = args.restart)

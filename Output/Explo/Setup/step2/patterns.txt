@@ -1,0 +1,3 @@
+ID	pvals	statistics	Pheno0	Pheno1	PhenoNA
+0	0.001	70	50	50	0
+1	0.0000001	70	0	50	0

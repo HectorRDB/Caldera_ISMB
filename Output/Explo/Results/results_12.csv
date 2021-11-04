@@ -1,0 +1,11 @@
+Analysis,TN,FN,TP,FP
+All Unitigs,337,345,22,0
+All Stages,330,0,367,7
+DBGWAS,337,364,3,0
+Stage1,337,367,0,0
+Stage2,337,367,0,0
+Stage3,337,287,80,0
+Stage5,336,33,334,1
+Stage10,330,0,367,7
+Stage15,330,0,367,7
+Stage20,330,0,367,7

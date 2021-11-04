@@ -1,0 +1,12 @@
+MANIFEST.in
+README.md
+setup.py
+bin/coin-script
+coin.egg-info/PKG-INFO
+coin.egg-info/SOURCES.txt
+coin.egg-info/dependency_links.txt
+coin.egg-info/not-zip-safe
+coin.egg-info/top_level.txt
+docs/Explo.ipynb
+docs/StatTests.ipynb
+docs/Subgraphs.ipynb
