@@ -26,6 +26,7 @@ echo "##########################################################" >> ${out}/all_
 
 # Preprocess ------
 python3 /src/CALDERA/bin/Pre-Process/toMajor.py -l ${data} > ${out}/caldera.out 2>&1
+R CMD BATCH /Analysis/Pseudomonas/makePop.R ${out}/makePop.out
 echo "Finished pre-processing" >> ${out}/all_steps.out
 echo "" >> ${out}/all_steps.out
 echo "##########################################################" >> ${out}/all_steps.out
