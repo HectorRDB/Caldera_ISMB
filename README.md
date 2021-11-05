@@ -11,4 +11,5 @@ This repository is organized as follow:
 - `scr`: A folder containing the Caldera algorithm, as well as our implementation of  COIN,  FACS and All Unitigs.
 - `Figures`: Scripts to generate the figures from the main paper and supplementary
 
-You can use the Example folder to run a simple example that should run under 5 minutes.
+You can use the Analysis/Example folder to run a simple example that should run under 5 minutes. The output from that run is already present in Output/Example.
+
