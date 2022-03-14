@@ -22,7 +22,7 @@ This repository is organized as follow:
 
 Assuming we are on a docker container created via the [Dockerfile](./Dockerfile), we first create a test dataset.
 
-```r
+```sh
 out=/Example/Output
 raw=/Example/Raw
 data=/Example/Data/
@@ -39,7 +39,7 @@ We then run the actual scripts:
 * Run the Caldera script with two threads (`-t 2`), on one community (`-C 1`).
 * Run DBGWAS step 3 (`-skip1 -skip2`) to visualize the results. This creates an html file in Outpout/caldera/step3 where we can visualize the significant CCS.
 
-```r
+```sh
 DBGWAS -strains ${raw}/strains -only1 -nb-cores 2 -output ${data} 
 python3 src/CALDERA/bin/Pre-Process/toMajor.py -l ${data}
 python3 src/CALDERA/bin/caldera-script -l ${data} -o ${out}/caldera/ -v -t 2 -C 1
