@@ -1,4 +1,3 @@
-.gitignore
 LICENSE
 MANIFEST.in
 Manifest.in
