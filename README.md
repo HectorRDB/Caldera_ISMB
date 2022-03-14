@@ -29,10 +29,10 @@ This creates fasta files, one per genome, as well as a strains file. For more in
 
 We then run the actual scripts:
 
-+ Run DBGWAS step1 (via the `-only1` parameter) to build the DBG.
-+ Run the `toMajor.py` script to prepare the format.
-+ Run the Caldera script with two threads (`-t 2`), on one community (`-C 1`).
-+ Run DBGWAS step 3 (`-skip1 -skip2`) to visualize the results. This creates an html file in Outpout/caldera/step3 where we can visualize the significant CCS.
+- Run DBGWAS step1 (via the `-only1` parameter) to build the DBG.
+- Run the `toMajor.py` script to prepare the format.
+- Run the Caldera script with two threads (`-t 2`), on one community (`-C 1`).
+- Run DBGWAS step 3 (`-skip1 -skip2`) to visualize the results. This creates an html file in Outpout/caldera/step3 where we can visualize the significant CCS.
 
 ```r
 DBGWAS -strains ${raw}/strains -only1 -nb-cores 2 -output ${data} 
