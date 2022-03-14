@@ -1,0 +1,14 @@
+Analysis,TN,FN,TP,FP
+All Unitigs,337,336,31,0
+All Stages,330,0,367,7
+DBGWAS,337,361,6,0
+Stage1,337,367,0,0
+Stage2,337,334,33,0
+Stage3,337,256,111,0
+Stage5,335,32,335,2
+Stage10,330,0,367,7
+Stage15,330,0,367,7
+Stage20,330,0,367,7
+kmer fixed,37,5520,6,37
+kmer lmm,90,5324,202,90
+kmer wg,53,5526,0,53

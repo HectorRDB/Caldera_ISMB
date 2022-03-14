@@ -6,9 +6,9 @@ library(here)
 library(stringr)
 library(cowplot)
 
-res_all_unitigs <- read_csv(here("Output", "Pseudomonas", "AllUnitigs_results.csv"))
-res_caldera <- read_csv(here("Output", "Pseudomonas", "Caldera_S7_results.csv"))
-res_dbgwas <- read_csv(here("Output", "Pseudomonas", "DBGWAS_q_results.csv"))
+res_all_unitigs <- read_csv(here("Output", "Amikacin", "AllUnitigs_results.csv"))
+res_caldera <- read_csv(here("Output", "Amikacin", "Caldera_S7_results.csv"))
+res_dbgwas <- read_csv(here("Output", "Amikacin", "DBGWAS_q_results.csv"))
 
 cov <- bind_rows("All Unitigs" = res_all_unitigs, "CALDERA" = res_caldera,
                  "DBGWAS" = res_dbgwas, .id = "Method") %>%
@@ -28,7 +28,7 @@ p <- ggplot(cov %>% filter(Object != "Not_in_either"),
                                 "DBGWAS" = "#C6DBEF"),
                      labels = c("CALDERA", "All unitigs", "DBGWAS"))
 p
-ggsave(filename = here("Figures", "Pseudomonas", "Coverage_different_methods.png"),
+ggsave(filename = here("Figures", "Amikacin", "Coverage_different_methods.png"),
        height = 4, width = 10)
 
 cov <- cov %>%

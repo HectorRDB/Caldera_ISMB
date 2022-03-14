@@ -58,8 +58,8 @@ RUN apt-get update \
     && install.r docopt \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 # R packages for DBGWAS:
-RUN R -e "install.packages(c('devtools', 'testthat', 'roxygen2', 'docopt', 'curl', 'Biostrings', 'optparse'))"
-RUN R -e "install.packages(c('ape', 'phangorn'), repos='http://cran.us.r-project.org')"
+RUN R -e "install.packages(c('devtools', 'testthat', 'roxygen2', 'docopt', 'curl', 'Biostrings', 'optparse', 'ape'))"
+RUN R -e "devtools::install_version('phangorn', version = '2.2', repos='http://cran.us.r-project.org')"
 RUN R -e "install.packages('https://raw.githubusercontent.com/sgearle/bugwas/master/build/bugwas_1.0.tar.gz', repos=NULL, type='source')"
 RUN apt-get update && apt-get install -yq cmake zlib1g-dev
 RUN wget -O ncbi-blast.tar.gz \
@@ -96,6 +96,27 @@ ENV PATH="/usr/local/HDF_Group/HDF5/1.8.18/bin/:/root/.local/bin:/dbgwas/blast/:
 RUN R -e "install.packages(c('here', 'dplyr', 'ggplot2', 'stringr', 'igraph'))" && \
   R -e "install.packages(c('tidyr', 'cowplot', 'network', 'ggnetwork', 'openxlsx'))" && \
   R -e "install.packages(c('phylogram', 'dendextend', 'readr', 'purrr'))" && echo "" > .here
+
+# Install pyseer and need tools around
+RUN cd ${HOME} && mkdir software && cd software && wget https://github.com/simongog/sdsl-lite/archive/v2.0.3.tar.gz &&  \
+  tar -xvf v2.0.3.tar.gz && rm v2.0.3.tar.gz && cd sdsl-lite-2.0.3 && ./install.sh ../
+RUN cd /scr && git clone https://github.com/nvalimak/fsm-lite.git && \
+  cd fsm-lite && make depend && make
+RUN cd /scr && git clone https://github.com/mgalardini/pyseer.git && rm -rf pyseer/.git && \
+  cd pyseer && python3 -m pip install -e .
+RUN cd /scr && wget https://github.com/marbl/Mash/releases/download/v2.3/mash-Linux64-v2.3.tar && \
+  tar -xvf mash-Linux64-v2.3.tar && rm mash-Linux64-v2.3.tar && mv mash-Linux64-v2.3 mash
+RUN cd /scr && git clone https://github.com/HIITMetagenomics/dsm-framework.git  && \
+  cd dsm-framework && rm -rf .git && make clean && make
+# Install Kover and needed tools around
+# RUN apt-get update && apt-get install -y --no-install-recommends \
+#   make llvm libncursesw5-dev xz-utils tk-dev libxmlsec1-dev && \
+#   pyenv install 2.7.18 && pyenv global 2.7.18 && \
+#   python -m pip install numpy scipy pandas progressbar cython && \
+#   cd /scr && git clone https://github.com/aldro61/kover.git && \
+#   cd kover && ./install.sh && \
+#   pyenv global 3.8.2
+# ENV PATH="/scr/kover/bin/:${PATH}"
 
 COPY ./src /src
 RUN python3 -m pip install -e src/CALDERA/. && python3 -m pip install -e src/COIN/.
